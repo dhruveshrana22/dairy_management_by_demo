@@ -1,7 +1,7 @@
 "use client";
 
-import React from "react";
-import { useForm } from "react-hook-form";
+import React, { useState } from "react";
+import { useForm, FieldErrors } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -12,31 +12,32 @@ import { AlertCircle } from "lucide-react";
 import { getApiData } from "@/helpers/apiHelper";
 import { BaseUrl, endpoint } from "@/config/siteconfig";
 
+type FormData = {
+  name: string;
+  email: string;
+  phoneNumber: string;
+  password: string;
+};
 
 const SignInForm: React.FC = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm<FormData>();
 
-  const onSubmit = async (values: any) => {
+  const [loading, setLoading] = useState(false);
+
+  const onSubmit = async (values: FormData) => {
     console.log("Form Values:", values);
-    const formData = {
-      name: values?.name,
-      email: values?.email,
-      phoneNumber: values?.phoneNumber,
-      password: values?.password,
-    };
 
-    // Show loading toast
     const toastId = toast.loading("Submitting your data...");
-
     try {
+      setLoading(true);
       const response = await getApiData(
         "post",
         `${BaseUrl}${endpoint.signUp}`,
-        formData
+        values
       );
 
       if (response?.status) {
@@ -53,7 +54,19 @@ const SignInForm: React.FC = () => {
       toast.error("Something went wrong. Please try again.", {
         id: toastId,
       });
+    } finally {
+      setLoading(false);
     }
+  };
+
+  const renderError = (error: FieldErrors<FormData>[keyof FormData]) => {
+    if (!error) return null;
+    return (
+      <Alert variant="destructive" className="mt-2">
+        <AlertCircle className="h-4 w-4" />
+        <AlertDescription>{error.message}</AlertDescription>
+      </Alert>
+    );
   };
 
   return (
@@ -80,12 +93,7 @@ const SignInForm: React.FC = () => {
                 })}
                 className={errors.name ? "border-destructive" : ""}
               />
-              {errors.name && (
-                <Alert variant="destructive" className="mt-2">
-                  <AlertCircle className="h-4 w-4" />
-                  <AlertDescription>{errors.name.message}</AlertDescription>
-                </Alert>
-              )}
+              {renderError(errors.name)}
             </div>
 
             {/* Phone Number Field */}
@@ -104,14 +112,7 @@ const SignInForm: React.FC = () => {
                 })}
                 className={errors.phoneNumber ? "border-destructive" : ""}
               />
-              {errors.phoneNumber && (
-                <Alert variant="destructive" className="mt-2">
-                  <AlertCircle className="h-4 w-4" />
-                  <AlertDescription>
-                    {errors.phoneNumber.message}
-                  </AlertDescription>
-                </Alert>
-              )}
+              {renderError(errors.phoneNumber)}
             </div>
 
             {/* Email Field */}
@@ -130,12 +131,7 @@ const SignInForm: React.FC = () => {
                 })}
                 className={errors.email ? "border-destructive" : ""}
               />
-              {errors.email && (
-                <Alert variant="destructive" className="mt-2">
-                  <AlertCircle className="h-4 w-4" />
-                  <AlertDescription>{errors.email.message}</AlertDescription>
-                </Alert>
-              )}
+              {renderError(errors.email)}
             </div>
 
             {/* Password Field */}
@@ -154,16 +150,11 @@ const SignInForm: React.FC = () => {
                 })}
                 className={errors.password ? "border-destructive" : ""}
               />
-              {errors.password && (
-                <Alert variant="destructive" className="mt-2">
-                  <AlertCircle className="h-4 w-4" />
-                  <AlertDescription>{errors.password.message}</AlertDescription>
-                </Alert>
-              )}
+              {renderError(errors.password)}
             </div>
 
             {/* Submit Button */}
-            <Button type="submit" className="w-full">
+            <Button type="submit" loading={loading} className="w-full">
               Sign Up
             </Button>
           </form>
