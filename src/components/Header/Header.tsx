@@ -1,4 +1,6 @@
-import React from 'react';
+'use client';
+
+import React, { useEffect } from 'react';
 // import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -6,6 +8,10 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '../u
 import Link from 'next/link';
 
 const Header = () => {
+  useEffect(() => {
+    console.log('do something ');
+  }, []);
+
   const navItems = [
     { title: 'Add Customer', href: '/add-customer' },
     { title: 'View Customers', href: '/view-customers' },
