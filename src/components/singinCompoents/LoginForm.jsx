@@ -21,6 +21,8 @@ import { useRouter } from 'next/navigation';
 import { endpoint } from '@/config/siteconfig';
 import getApiData from '@/helpers/apiHelper';
 import Link from 'next/link';
+import { useAppDispatch, useAppSelector } from '@/store';
+import { setToken } from '@/store/authSlice';
 
 const LoginForm = () => {
   const {
@@ -41,6 +43,11 @@ const LoginForm = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
+  const { token, authState } = useAppSelector((state) => state.auth);
+  console.log('token: authState ', token, authState);
+
+  const dispatch = useAppDispatch();
+
   const loginType = watch('loginType'); // Watch for login type changes
 
   const onSubmit = async (data) => {
@@ -59,6 +66,11 @@ const LoginForm = () => {
         toast.success(response.data?.message || response.message || 'Operation was successful', {
           id: toastId,
         });
+
+        if (response?.token) {
+          dispatch(setToken(response?.token));
+        }
+
         router.push('home');
       } else {
         toast.error(response?.message || 'An error occurred', {
