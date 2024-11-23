@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useForm, FieldErrors } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -9,35 +9,29 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { AlertCircle } from 'lucide-react';
-import { getApiData } from '@/helpers/apiHelper';
+import getApiData from '@/helpers/apiHelper';
 import { BaseUrl, endpoint } from '@/config/siteconfig';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
-type FormData = {
-  name: string;
-  email: string;
-  phoneNumber: string;
-  password: string;
-};
-
-const SignInForm: React.FC = () => {
+const SignInForm = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>();
+  } = useForm();
 
   const [loading, setLoading] = useState(false);
 
   const router = useRouter();
 
-  const onSubmit = async (values: FormData) => {
+  const onSubmit = async (values) => {
     console.log('Form Values:', values);
 
     const toastId = toast.loading('Submitting your data...');
     try {
       setLoading(true);
-      const response = await getApiData('post', `${BaseUrl}${endpoint.signUp}`, values);
+      const response = await getApiData(`${BaseUrl}${endpoint.signUp}`, values, 'POST');
 
       if (response?.status) {
         toast.success(response?.data?.message || 'Operation was successful', {
@@ -59,7 +53,7 @@ const SignInForm: React.FC = () => {
     }
   };
 
-  const renderError = (error: FieldErrors<FormData>[keyof FormData]) => {
+  const renderError = (error) => {
     if (!error) return null;
     return (
       <Alert variant="destructive" className="mt-2">
@@ -151,6 +145,15 @@ const SignInForm: React.FC = () => {
                 className={errors.password ? 'border-destructive' : ''}
               />
               {renderError(errors.password)}
+            </div>
+
+            <div className="mt-4 text-center">
+              <span className="text-sm">
+                Already have an account?{' '}
+                <Link href={'/'} className="text-blue-600 hover:text-blue-800">
+                  Login
+                </Link>
+              </span>
             </div>
 
             {/* Submit Button */}
