@@ -3,8 +3,9 @@
 // const live: boolean = process.env?.REACT_APP_DEV_LIVE === "live";
 // const staging: boolean = process.env?.REACT_APP_DEV_LIVE === "staging";
 
+const baseUrl: string = 'https://bizwise-zdy7.onrender.com/';
 // const baseUrl: string = "https://bizwise.onrender.com/";
-const baseUrl: string = 'https://a8bab4fa8bc300f455a3b40b860ac41a.serveo.net/';
+// const baseUrl: string = 'https://a8bab4fa8bc300f455a3b40b860ac41a.serveo.net/';
 
 // Site configuration type
 interface SiteConfig {

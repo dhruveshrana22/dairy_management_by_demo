@@ -10,7 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { AlertCircle } from 'lucide-react';
 import getApiData from '@/helpers/apiHelper';
-import { BaseUrl, endpoint } from '@/config/siteconfig';
+import { endpoint } from '@/config/siteconfig';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
@@ -31,7 +31,7 @@ const SignInForm = () => {
     const toastId = toast.loading('Submitting your data...');
     try {
       setLoading(true);
-      const response = await getApiData(`${BaseUrl}${endpoint.signUp}`, values, 'POST');
+      const response = await getApiData(`${endpoint.signUp}`, values, 'POST');
 
       if (response?.status) {
         toast.success(response?.data?.message || 'Operation was successful', {
