@@ -4,9 +4,7 @@ import dynamic from 'next/dynamic';
 import React from 'react';
 
 // Dynamically import Header without SSR
-const Header = dynamic(() => import('../../components/Header/Header'), {
-  ssr: false,
-});
+const Header = dynamic(() => import('../../components/Header/Header'));
 
 const Home = () => {
   return (
