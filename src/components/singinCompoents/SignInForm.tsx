@@ -1,16 +1,17 @@
-"use client";
+'use client';
 
-import React, { useState } from "react";
-import { useForm, FieldErrors } from "react-hook-form";
-import { toast } from "react-hot-toast";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { AlertCircle } from "lucide-react";
-import { getApiData } from "@/helpers/apiHelper";
-import { BaseUrl, endpoint } from "@/config/siteconfig";
+import React, { useState } from 'react';
+import { useForm, FieldErrors } from 'react-hook-form';
+import { toast } from 'react-hot-toast';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { AlertCircle } from 'lucide-react';
+import { getApiData } from '@/helpers/apiHelper';
+import { BaseUrl, endpoint } from '@/config/siteconfig';
+import { useRouter } from 'next/navigation';
 
 type FormData = {
   name: string;
@@ -28,30 +29,29 @@ const SignInForm: React.FC = () => {
 
   const [loading, setLoading] = useState(false);
 
-  const onSubmit = async (values: FormData) => {
-    console.log("Form Values:", values);
+  const router = useRouter();
 
-    const toastId = toast.loading("Submitting your data...");
+  const onSubmit = async (values: FormData) => {
+    console.log('Form Values:', values);
+
+    const toastId = toast.loading('Submitting your data...');
     try {
       setLoading(true);
-      const response = await getApiData(
-        "post",
-        `${BaseUrl}${endpoint.signUp}`,
-        values
-      );
+      const response = await getApiData('post', `${BaseUrl}${endpoint.signUp}`, values);
 
       if (response?.status) {
-        toast.success(response?.data?.message || "Operation was successful", {
+        toast.success(response?.data?.message || 'Operation was successful', {
           id: toastId,
         });
+        router.push('home');
       } else {
-        toast.error(response?.message || "An error occurred", {
+        toast.error(response?.message || 'An error occurred', {
           id: toastId,
         });
       }
     } catch (error) {
-      console.error("Error during API call:", error);
-      toast.error("Something went wrong. Please try again.", {
+      console.error('Error during API call:', error);
+      toast.error('Something went wrong. Please try again.', {
         id: toastId,
       });
     } finally {
@@ -84,14 +84,14 @@ const SignInForm: React.FC = () => {
                 id="name"
                 type="text"
                 placeholder="Enter your full name"
-                {...register("name", {
-                  required: "Name is required",
+                {...register('name', {
+                  required: 'Name is required',
                   minLength: {
                     value: 2,
-                    message: "Name must be at least 2 characters long",
+                    message: 'Name must be at least 2 characters long',
                   },
                 })}
-                className={errors.name ? "border-destructive" : ""}
+                className={errors.name ? 'border-destructive' : ''}
               />
               {renderError(errors.name)}
             </div>
@@ -103,14 +103,14 @@ const SignInForm: React.FC = () => {
                 id="phoneNumber"
                 type="tel"
                 placeholder="Enter your phone number"
-                {...register("phoneNumber", {
-                  required: "Phone number is required",
+                {...register('phoneNumber', {
+                  required: 'Phone number is required',
                   pattern: {
                     value: /^[0-9]{10}$/,
-                    message: "Enter a valid 10-digit phone number",
+                    message: 'Enter a valid 10-digit phone number',
                   },
                 })}
-                className={errors.phoneNumber ? "border-destructive" : ""}
+                className={errors.phoneNumber ? 'border-destructive' : ''}
               />
               {renderError(errors.phoneNumber)}
             </div>
@@ -122,14 +122,14 @@ const SignInForm: React.FC = () => {
                 id="email"
                 type="email"
                 placeholder="Enter your email"
-                {...register("email", {
-                  required: "Email is required",
+                {...register('email', {
+                  required: 'Email is required',
                   pattern: {
                     value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                    message: "Please enter a valid email address",
+                    message: 'Please enter a valid email address',
                   },
                 })}
-                className={errors.email ? "border-destructive" : ""}
+                className={errors.email ? 'border-destructive' : ''}
               />
               {renderError(errors.email)}
             </div>
@@ -141,14 +141,14 @@ const SignInForm: React.FC = () => {
                 id="password"
                 type="password"
                 placeholder="Enter your password"
-                {...register("password", {
-                  required: "Password is required",
+                {...register('password', {
+                  required: 'Password is required',
                   minLength: {
                     value: 8,
-                    message: "Password must be at least 8 characters long",
+                    message: 'Password must be at least 8 characters long',
                   },
                 })}
-                className={errors.password ? "border-destructive" : ""}
+                className={errors.password ? 'border-destructive' : ''}
               />
               {renderError(errors.password)}
             </div>

@@ -1,5 +1,5 @@
-import Login from "@/components/singinCompoents/Login";
+import LoginForm from '@/components/singinCompoents/LoginForm';
 
 export default function Home() {
-  return <Login />;
+  return <LoginForm />;
 }
