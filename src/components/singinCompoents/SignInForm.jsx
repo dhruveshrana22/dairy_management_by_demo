@@ -26,6 +26,8 @@ const SignInForm = () => {
   const router = useRouter();
 
   const onSubmit = async (values) => {
+    console.log('Form Values:', values);
+
     const toastId = toast.loading('Submitting your data...');
     try {
       setLoading(true);
@@ -55,6 +57,7 @@ const SignInForm = () => {
     if (!error) return null;
     return (
       <Alert variant="destructive" className="mt-2">
+        <AlertCircle className="h-4 w-4" />
         <AlertDescription>{error.message}</AlertDescription>
       </Alert>
     );
@@ -84,6 +87,9 @@ const SignInForm = () => {
                 })}
                 className={errors.name ? 'border-destructive' : ''}
               />
+              {renderError(errors.name)}
+
+              {/* testing */}
             </div>
 
             {/* Phone Number Field */}
@@ -102,6 +108,7 @@ const SignInForm = () => {
                 })}
                 className={errors.phoneNumber ? 'border-destructive' : ''}
               />
+              {renderError(errors.phoneNumber)}
             </div>
 
             {/* Email Field */}
@@ -142,8 +149,19 @@ const SignInForm = () => {
               {renderError(errors.password)}
             </div>
 
+            <div className="mt-4 text-center">
+              <span className="text-sm">
+                Already have an account?{' '}
+                <Link href={'/'} className="text-blue-600 hover:text-blue-800">
+                  Login
+                </Link>
+              </span>
+            </div>
 
-
+            {/* Submit Button */}
+            <Button type="submit" loading={loading} className="w-full">
+              Sign Up
+            </Button>
           </form>
         </CardContent>
       </Card>
