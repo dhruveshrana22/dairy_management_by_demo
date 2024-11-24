@@ -6,8 +6,6 @@ export default function Home() {
     <>
       <div>dhruvesh Rana How R you I am the devloper give the</div>
       <Header />
-
-      <LoginForm />
     </>
   );
 }
