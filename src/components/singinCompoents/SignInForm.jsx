@@ -142,19 +142,8 @@ const SignInForm = () => {
               {renderError(errors.password)}
             </div>
 
-            <div className="mt-4 text-center">
-              <span className="text-sm">
-                Already have an account?{' '}
-                <Link href={'/'} className="text-blue-600 hover:text-blue-800">
-                  Login
-                </Link>
-              </span>
-            </div>
 
-            {/* Submit Button */}
-            <Button type="submit" loading={loading} className="w-full">
-              Sign Up
-            </Button>
+
           </form>
         </CardContent>
       </Card>
