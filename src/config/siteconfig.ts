@@ -3,7 +3,9 @@
 // const live: boolean = process.env?.REACT_APP_DEV_LIVE === "live";
 // const staging: boolean = process.env?.REACT_APP_DEV_LIVE === "staging";
 
-const baseUrl: string = "https://bizwise.onrender.com/";
+const baseUrl: string = 'https://bizwise-zdy7.onrender.com/';
+// const baseUrl: string = "https://bizwise.onrender.com/";
+// const baseUrl: string = 'https://a8bab4fa8bc300f455a3b40b860ac41a.serveo.net/';
 
 // Site configuration type
 interface SiteConfig {
@@ -28,8 +30,8 @@ interface Endpoint {
 
 // Site configuration object
 const siteConfig: SiteConfig = {
-  siteName: "React",
-  siteIcon: "ion-flash",
+  siteName: 'React',
+  siteIcon: 'ion-flash',
   footerText: `© ${new Date().getFullYear()} test`,
 
   apiUrl: baseUrl,
@@ -37,16 +39,16 @@ const siteConfig: SiteConfig = {
   sailsUrl: baseUrl,
 
   google: {
-    analyticsKey: "UA-xxxxxxxxx-1",
+    analyticsKey: 'UA-xxxxxxxxx-1',
   },
-  tinyEditorKey: "e3tq72z0kgbpfay3800n06hqbu1su39v084nye4weku75ib6",
-  dashboard: "/dashboard",
+  tinyEditorKey: 'e3tq72z0kgbpfay3800n06hqbu1su39v084nye4weku75ib6',
+  dashboard: '/dashboard',
 };
 
 // Endpoint configuration object
 const endpoint: Endpoint = {
-  logIn: "api/signin",
-  signUp: "api/signup",
+  logIn: 'api/signin',
+  signUp: 'api/signup',
 };
 
 // Export base URL and configurations

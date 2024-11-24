@@ -1,5 +1,12 @@
-import Login from "@/components/singinCompoents/Login";
+import Header from '@/components/Header/Header';
+import LoginForm from '@/components/singinCompoents/LoginForm';
 
 export default function Home() {
-  return <Login />;
+  return (
+    <>
+      <div>dhruvesh Rana How R you I am the devloper give the</div>
+      <Header />
+      <LoginForm />
+    </>
+  );
 }
